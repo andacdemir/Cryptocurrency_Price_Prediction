@@ -1,2 +1,2 @@
-# cryptoPrediction
-Predicts the price of top 100 cryptocurrencies with time deterministic models using RNNs
+# Cryptocurrency Price Prediction
+Predicts the Bitcoin, Ethereum, IOTA and Tron prices.
