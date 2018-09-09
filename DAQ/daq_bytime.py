@@ -13,6 +13,7 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 from datetime import datetime
 import pandas_datareader.data as web
+from math import log
 
 def str2bool(v):
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
@@ -94,6 +95,20 @@ def get_df(url):
     
     return(df)
 
+def log_transform(num, base=10):
+    return log(num, base)
+
+'''
+    Takes the log scale of the columns: Open, High, Low, Close in the dataframe
+    with default base: 10. (Applies the log transform function to many columns)
+'''
+def scale_to_log(df):
+    df[['Open', 'High', 'Low', 'Close']] = df[['Open', 'High', 
+                                               'Low', 'Close']].applymap(
+                                                                log_transform)
+    print(tabulate(df, headers='keys', tablefmt='psql'))
+    return df
+    
 def main():
     args = pass_legal_args()
     now = datetime.now()
@@ -111,7 +126,7 @@ def main():
         
     # plots with plotly:
     df = df.iloc[::-1] # reverses the time order of the dataframe
-    data = [go.Scatter(x=df.Date, y=df.Volume)]
+    data = [go.Scatter(x=df.Date, y=df.Close)]
     py.iplot(data)
 
 if __name__ == "__main__":
